@@ -13,7 +13,7 @@ const Home = () => {
   const [newTask, setNewTask] = useState({ title: '', desc: '', dueDate: '' });
   const [editingTaskId, setEditingTaskId] = useState(null);
 
-  const apiUrl = 'http://localhost:5000/task';
+  const apiUrl = 'https://tasks-api-vwnm.onrender.com/task';
   const token = localStorage.getItem('token');
 
   const createTask = async () => {
