@@ -1,0 +1,26 @@
+.CellAction{
+  display: flex;
+  gap: 10px;
+}
+
+.editIcon {
+  cursor: pointer;
+  color: green;
+  background-color: rgb(173, 229, 173);
+}
+
+.deleteIcon {
+    cursor: pointer;
+    color: red;
+    background-color: rgb(233, 175, 175);
+}
+
+.data-table{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+
