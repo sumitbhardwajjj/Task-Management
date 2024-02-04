@@ -78,6 +78,9 @@ const Login = () => {
     } catch (error) {
       console.error("Login failed:", error.response.data || error.message);
     }
+    finally {
+      setLoading(false); // Set loading back to false after the request is completed
+    }
   };
 
   return (

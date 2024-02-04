@@ -83,6 +83,9 @@ const Signup = () => {
     } catch (error) {
       console.error("Signup failed:", error.response?.data || error.message);
     }
+    finally {
+      setLoading(false); // Set loading back to false after the request is completed
+    }
   };
 
   return (
