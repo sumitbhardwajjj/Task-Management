@@ -12,7 +12,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-image: url('https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg');
+    background-image: url('https://media.istockphoto.com/id/1402148208/vector/overlap-circle-abstract-layered-background.jpg?s=612x612&w=0&k=20&c=h5qUquYBSQzdeU5rKTzEbIMeiomdTYgMEXE0pVXQTCM=');
   }
   
   h3 {
@@ -47,7 +47,8 @@
   
   .lin span{
     text-align: center;
-    color: rgb(0, 236, 253);
+    font-weight: 600;
+    color: rgb(0, 253, 253);
   }
   
   .Button {

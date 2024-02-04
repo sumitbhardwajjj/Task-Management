@@ -7,6 +7,8 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -59,6 +61,9 @@ const Login = () => {
     }
 
     try {
+
+      setLoading(true);
+      
       const response = await axios.post(
         "https://tasks-api-vwnm.onrender.com/user/login",
         formData
@@ -77,6 +82,7 @@ const Login = () => {
 
   return (
     <div className="login-form">
+       {loading && <p>Loading...</p>}
       <form className="form" onSubmit={handleSubmit}>
         <h3>Login</h3>
         <input
