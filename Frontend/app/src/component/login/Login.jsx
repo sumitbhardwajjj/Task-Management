@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Signup.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import LoadingBar from "react-top-loading-bar";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const ref = useRef(null);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,7 +43,8 @@ const Login = () => {
     }
 
     // Password validation using custom regex
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const passwordRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!formData.password || !passwordRegex.test(formData.password)) {
       newErrors.password =
         "Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, one digit, and one special character";
@@ -61,9 +63,8 @@ const Login = () => {
     }
 
     try {
+      ref.current.continuousStart(); // Start the loading bar
 
-      setLoading(true);
-      
       const response = await axios.post(
         "https://tasks-api-vwnm.onrender.com/user/login",
         formData
@@ -77,15 +78,14 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login failed:", error.response.data || error.message);
-    }
-    finally {
-      setLoading(false); // Set loading back to false after the request is completed
+    } finally {
+      ref.current.complete(); 
     }
   };
 
   return (
     <div className="login-form">
-       {loading && <p>Loading...</p>}
+      <LoadingBar color="#f11946" ref={ref} />
       <form className="form" onSubmit={handleSubmit}>
         <h3>Login</h3>
         <input

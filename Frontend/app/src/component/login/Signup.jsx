@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import LoadingBar from "react-top-loading-bar";
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const ref = useRef(null);
 
   const [formData, setFormData] = useState({
-    name:"",
+    name: "",
     email: "",
     password: "",
   });
@@ -43,7 +44,8 @@ const Signup = () => {
     }
 
     // Password validation using custom regex
-    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const passwordRegex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     if (!formData.password || !passwordRegex.test(formData.password)) {
       newErrors.password =
         "Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, one digit, and one special character";
@@ -61,8 +63,7 @@ const Signup = () => {
     }
 
     try {
-
-      setLoading(true)
+      ref.current.continuousStart();
       const response = await axios.post(
         "https://tasks-api-vwnm.onrender.com/user",
         formData
@@ -82,15 +83,14 @@ const Signup = () => {
       }
     } catch (error) {
       console.error("Signup failed:", error.response?.data || error.message);
-    }
-    finally {
-      setLoading(false); // Set loading back to false after the request is completed
+    } finally {
+      ref.current.complete();
     }
   };
 
   return (
     <div className="login-form">
-       {loading && <p>Loading...</p>}
+      <LoadingBar color="#f11946" ref={ref} />
       <form className="form" onSubmit={handleSubmit}>
         <h3>Sign up</h3>
         <input
@@ -109,7 +109,7 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
-         {errors.email && <span className="error">{errors.email}</span>}
+        {errors.email && <span className="error">{errors.email}</span>}
         <input
           type="password"
           name="password"
@@ -118,7 +118,7 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
-         {errors.password && <span className="error">{errors.password}</span>}
+        {errors.password && <span className="error">{errors.password}</span>}
         <button className="Button" type="submit">
           Sign up
         </button>

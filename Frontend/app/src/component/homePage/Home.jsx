@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
 import TaskDataGrid from '../dataTable/DataTable';
 import "./Home.css"
@@ -26,14 +26,14 @@ const Home = () => {
     }
   };
 
-  const getTask = async () => {
+  const getTask =  useCallback(async () => {
     try {
       const res = await axios.get(apiUrl, { headers: { Authorization: `Bearer ${token}` } });
       setTasks(res.data);
     } catch (err) {
       console.error(err);
     }
-  };
+  },[token]);
 
   const deleteTask = async (id) => {
     try {
@@ -82,7 +82,7 @@ const Home = () => {
 
   useEffect(() => {
     getTask();
-  },[]);
+  },[getTask]);
 
 
   return (
